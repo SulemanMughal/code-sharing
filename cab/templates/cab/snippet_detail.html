@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static snippets %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/pygments.css' %}">
+    <style>
+        td.linenos .normal {
+            color: white;
+        }
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="fs-1 fw-bolder">
+                    {{ snippet.title }}
+                </h1>
+                <p class="card-text">
+                    <span class="fw-bolder">Author: </span> <span>{{ snippet.author }}</span> <span class="fw-bolder ms-2">Poster: </span> <span>{{ snippet.pub_date.date }}</span> <span class="fw-bolder ms-2">Language: </span> <span>{{ snippet.language|capfirst }}</span>
+                </p>
+            </div>
+            <div class="col-12">
+                <div class="card w-100 my-3">
+                    <div class="card-body bg-dark">
+                        {{ snippet.highlighted_code|safe|escape }}
+                        
+                    </div>
+                    
+                        <div class="card-footer">
+                            {% if request.user == snippet.author %}
+                                <a href="{% url 'cab_snippet_edit' snippet.id  %}" class="btn btn-primary d-block" >Edit Snippet</a>
+                            {% endif %}
+                            <a href="{% url 'cab_bookmark_add' snippet.id %}">Add Bookmark</a>
+                            {% if_rated user snippet %}
+                                {% get_rating user snippet as rating %}
+                                <p>You rated this snippet {{ rating.get_rating_display }}.</p>
+                                {% else %}
+                                <p>Rate this snippet:
+                                <a href="{% url 'cab_rating_add' snippet.id %}?rating=1">useful</a> or
+                                <a href="{% url 'cab_rating_add' snippet.id %}?rating=-1">not useful</a>.</p>
+                            {% endif_rated %}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

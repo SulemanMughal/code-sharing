@@ -1,0 +1,10 @@
+{% load snippets %}
+
+    {% if_bookmarked user snippet %}
+        <form method="post" action="{% url 'cab_bookmark_delete' snippet.id %}">
+            {% csrf_token %}
+        <p><input type="submit" value="Delete bookmark"></p>
+        </form>
+{% else %}
+<p><a href="{% url 'cab_bookmark_add' snippet.id %}">Add bookmark</a></p>
+{% endif_bookmarked %}

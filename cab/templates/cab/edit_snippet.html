@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% if add %}Add a{% else %}Edit your{% endif %} snippet</h1>
+<p>Use the form below to {% if add %}add{% else %}edit {% endif %}
+your snippet; all fields are required</p>
+<form method="post" action="">
+    {%  csrf_token %}
+{{ form.as_p }}
+<p><input type="submit" value="Send"></p>
+</form>
+{% endblock %}

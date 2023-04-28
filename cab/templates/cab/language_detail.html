@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="fs-1 fw-bolder">
+                    All Code Snippets Written in {{ lang.name }}
+                </h1>
+            </div>
+        </div>
+        <div class="row justify-content-center my-5">
+            <div class="col-12 ">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Tags</th>
+                        <th scope="col">Publication Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for snippet in snippets  %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{% url 'cab_snippet_detail' snippet.id %}">{{ snippet.title }}</a></td>
+                                <td>{{ snippet.author }}</td>
+                                <td>{{ snippet.tags }}</td>
+                                <td>{{ snippet.pub_date }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
